@@ -1,25 +1,22 @@
 import logo from './logo.svg';
 import './App.css';
+import Globe from 'react-globe.gl';
+import { useRef, useState, useEffect } from "react";
 
 function App() {
+  const globeEl = useRef();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Globe
+        pointOfView
+        ref={globeEl}
+        globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+        backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
+      />
     </div>
   );
 }
+
+
 
 export default App;
