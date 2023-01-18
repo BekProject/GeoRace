@@ -1,0 +1,9 @@
+html{
+    background-color: red;
+}
+
+.App{
+    display: block;
+    width: 100vw;
+    height: 100vh;
+}
