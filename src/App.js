@@ -10,6 +10,7 @@ import countriesz from "../src/mapData/worldBorders.geojson";
 function App() {
   const [countries, setCountries] = useState({ features: [] });
   const [hoverD, setHoverD] = useState();
+  const [clickedCountry, setClickedCountry] = useState(null);
 
   useEffect(() => {
     // load data
@@ -17,25 +18,36 @@ function App() {
       .then((res) => res.json())
       .then(({ features }) => setCountries(features));
   }, []);
-  const colorScale = d3.scaleSequentialSqrt(d3.interpolateYlOrRd);
-
-  // GDP per capita (avoiding countries with small pop)
 
   return (
     <div className="App">
+      <div className="HoverInformation">
+        {clickedCountry === null ? (
+          <h3>Click a country to get its info</h3>
+        ) : (
+          <>
+            <h3>Country Name : {clickedCountry.ADMIN}</h3>
+            <h3>Population EST : {clickedCountry.POP_EST} </h3>
+            <h3>GDP EST : {clickedCountry.GDP_MD_EST}</h3>
+            <h3>CONTINENT : {clickedCountry.CONTINENT}</h3>
+          </>
+        )}
+      </div>
       <Globe
         id="globe"
-        globeImageUrl="//unpkg.com/three-globe/example/img/earth-night.jpg"
+        globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
-        lineHoverPrecision={0}
-        bumpImageUrl="//unpkg.com/three-globe/example/img/earth-topology.png"
         polygonsData={countries}
-        polygonAltitude={(d) => (d === hoverD ? 0.02 : 0.0)}
-        polygonCapColor={(d) => (d === hoverD ? "transparent" : "transparent")}
+        polygonAltitude={(d) => (d === hoverD ? 0.01 : 0.005)}
+        polygonCapColor={(d) => (d === hoverD ? "blue" : "black")}
         polygonSideColor={() => "white"}
         polygonStrokeColor={() => "white"}
         polygonsTransitionDuration={100}
         onPolygonHover={setHoverD}
+        onPolygonClick={(e) => {
+          console.log(e);
+          setClickedCountry(e.properties);
+        }}
         polygonLabel={({ properties: d }) => `
         <b>${d.ADMIN} (${d.ISO_A2}):</b> <br />
       `}
