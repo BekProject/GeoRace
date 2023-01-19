@@ -27,10 +27,18 @@ function App() {
   function addToSelectedCountries(e) {
     console.log(e);
     if (selectedCountries.includes(e)) {
-      console.log("true");
+      console.log('true')
     } else {
       setSelectedCountries((selectedCountries) => [...selectedCountries, e]);
     }
+  }
+
+  function inAlreadyClicked(e) {
+    if (selectedCountries.includes(e)){
+      return "blue"
+    }
+
+    return "black"
   }
 
   return (
@@ -51,11 +59,12 @@ function App() {
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
         polygonsData={countries}
-        polygonAltitude={(d) => (d === hoverD ? 0.01 : 0.005)}
-        polygonCapColor={(d) => (d === hoverD ? "blue" : "black")}
+        polygonAltitude={(d) => (d === hoverD ? 0.05 : 0.005)}
+        // polygonCapColor={(d) => (d === hoverD ? "blue" : "black")}
+        polygonCapColor={(d) => inAlreadyClicked(d)}
         polygonSideColor={() => "white"}
         polygonStrokeColor={() => "white"}
-        polygonsTransitionDuration={100}
+        polygonsTransitionDuration={0.0001}
         onPolygonHover={setHoverD}
         onPolygonClick={(e) => {
           addToSelectedCountries(e);
