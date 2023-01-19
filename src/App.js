@@ -12,13 +12,20 @@ function App() {
   const [hoverD, setHoverD] = useState();
   const [clickedCountry, setClickedCountry] = useState(null);
   const [selectedCountries, setSelectedCountries] = useState([]);
+  const [selectionPool, setSelectionPool] = useState([]);
 
   useEffect(() => {
     // load data
     fetch(countriesz)
       .then((res) => res.json())
       .then(({ features }) => setCountries(features));
-  }, []);
+
+    fetch(countriesz)
+      .then((res) => res.json())
+      .then(({ features }) => setSelectionPool(features));
+  }, 
+
+  []);
 
   // function checkSelectedCountriesList(isoCode){
   //   if(isoCode in countries.properties.)
@@ -26,9 +33,10 @@ function App() {
 
   function addToSelectedCountries(e) {
     if (selectedCountries.includes(e)) {
-      console.log('true')
+      console.log(e.properties.ADMIN, ' already in list')
     } else {
       setSelectedCountries((selectedCountries) => [...selectedCountries, e]);
+      console.log(e.properties.ADMIN, ' added to selected countries');
   }
   }
 
@@ -38,6 +46,28 @@ function App() {
     }
     return "black"
   }
+
+  function randomlySelectedCountry(without_replacement=true) {
+
+
+    if (selectionPool.length == 0 || selectionPool.length == 1) {
+      setSelectionPool(countries.slice(-10));
+    }
+
+    if (without_replacement){
+      console.log(selectionPool)
+      var randomCountry = selectionPool[Math.floor(Math.random() * selectionPool.length)]; // select random country from the selection pool
+      selectionPool.splice(selectionPool.indexOf(randomCountry), 1); // remove selected country from selection pool
+      console.log(randomCountry)
+      console.log(randomCountry.properties.ADMIN)
+    }
+
+
+  }
+
+  const handleClick = () => {
+    randomlySelectedCountry();
+  };
 
   return (
     <div className="App">
@@ -52,6 +82,7 @@ function App() {
           )}
         </>
       </div>
+      <button className='RandomCountryGenerator' onClick={handleClick}> Generate Random Country </button>
       <Globe
         id="globe"
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
@@ -66,7 +97,9 @@ function App() {
         onPolygonHover={setHoverD}
         onPolygonClick={(e) => {
           addToSelectedCountries(e);
+          randomlySelectedCountry();
         }}
+
       />
     </div>
   );

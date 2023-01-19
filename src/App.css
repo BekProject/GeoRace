@@ -27,5 +27,15 @@ html{
     flex-direction: column;
     justify-content: space-around;
     align-items: flex-start;
-    color: rgb(218, 218, 218);
+    color: white;
+}
+
+.RandomCountryGenerator{
+    position: absolute;
+    z-index: 100;
+    width: 100px;
+    height: 50px;
+    background-color: white;
+    color: black;
+    right: 300px;
 }
