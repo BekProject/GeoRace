@@ -25,19 +25,17 @@ function App() {
   // }
 
   function addToSelectedCountries(e) {
-    console.log(e);
     if (selectedCountries.includes(e)) {
       console.log('true')
     } else {
       setSelectedCountries((selectedCountries) => [...selectedCountries, e]);
-    }
+  }
   }
 
   function inAlreadyClicked(e) {
     if (selectedCountries.includes(e)){
       return "blue"
     }
-
     return "black"
   }
 
