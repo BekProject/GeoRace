@@ -11,6 +11,7 @@ function App() {
   const [countries, setCountries] = useState({ features: [] });
   const [hoverD, setHoverD] = useState();
   const [clickedCountry, setClickedCountry] = useState(null);
+  const [selectedCountries, setSelectedCountries] = useState([]);
 
   useEffect(() => {
     // load data
@@ -19,19 +20,31 @@ function App() {
       .then(({ features }) => setCountries(features));
   }, []);
 
+  // function checkSelectedCountriesList(isoCode){
+  //   if(isoCode in countries.properties.)
+  // }
+
+  function addToSelectedCountries(e) {
+    console.log(e);
+    if (selectedCountries.includes(e)) {
+      console.log("true");
+    } else {
+      setSelectedCountries((selectedCountries) => [...selectedCountries, e]);
+    }
+  }
+
   return (
     <div className="App">
       <div className="HoverInformation">
-        {clickedCountry === null ? (
-          <h3>Click a country to get its info</h3>
-        ) : (
-          <>
-            <h3>Country Name : {clickedCountry.ADMIN}</h3>
-            <h3>Population EST : {clickedCountry.POP_EST} </h3>
-            <h3>GDP EST : {clickedCountry.GDP_MD_EST}</h3>
-            <h3>CONTINENT : {clickedCountry.CONTINENT}</h3>
-          </>
-        )}
+        <>
+          {selectedCountries.length > 0 && (
+            <>
+              {selectedCountries.map((item, index) => (
+                <p>{item.properties.ADMIN}</p>
+              ))}
+            </>
+          )}
+        </>
       </div>
       <Globe
         id="globe"
@@ -45,12 +58,8 @@ function App() {
         polygonsTransitionDuration={100}
         onPolygonHover={setHoverD}
         onPolygonClick={(e) => {
-          console.log(e);
-          setClickedCountry(e.properties);
+          addToSelectedCountries(e);
         }}
-        polygonLabel={({ properties: d }) => `
-        <b>${d.ADMIN} (${d.ISO_A2}):</b> <br />
-      `}
       />
     </div>
   );
