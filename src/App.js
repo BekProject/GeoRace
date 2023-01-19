@@ -6,13 +6,14 @@ import axios from "axios";
 import "../src/mapData/worldBorders.geojson";
 import * as d3 from "d3";
 import countriesz from "../src/mapData/worldBorders.geojson";
+import { select } from "d3";
 
 function App() {
   const [countries, setCountries] = useState({ features: [] });
   const [hoverD, setHoverD] = useState();
   const [clickedCountry, setClickedCountry] = useState(null);
   const [selectedCountries, setSelectedCountries] = useState([]);
-  const [selectionPool, setSelectionPool] = useState([]);
+  var [selectionPool, setSelectionPool] = useState([]);
 
   useEffect(() => {
     // load data
@@ -48,26 +49,19 @@ function App() {
   }
 
   function randomlySelectedCountry(without_replacement=true) {
-
-
-    if (selectionPool.length == 0 || selectionPool.length == 1) {
-      setSelectionPool(countries.slice(-10));
+    if (selectionPool.length == 0) {
+      console.log('- - - - - - - - reseting selection pool - - - - - - - -');
+      selectionPool = [...countries];
+      selectRandomCountry();
     }
-
-    if (without_replacement){
-      console.log(selectionPool)
-      var randomCountry = selectionPool[Math.floor(Math.random() * selectionPool.length)]; // select random country from the selection pool
-      selectionPool.splice(selectionPool.indexOf(randomCountry), 1); // remove selected country from selection pool
-      console.log(randomCountry)
-      console.log(randomCountry.properties.ADMIN)
-    }
-
-
+    else {selectRandomCountry();}
   }
 
-  const handleClick = () => {
-    randomlySelectedCountry();
-  };
+  function selectRandomCountry(without_replacement=true) {
+    var randomCountry = selectionPool[Math.floor(Math.random() * selectionPool.length)]; // select random country from the selection pool
+    selectionPool.splice(selectionPool.indexOf(randomCountry), 1); // remove selected country from selection pool
+    console.log('Randomly Selected Country: ', randomCountry.properties.ADMIN);
+  }
 
   return (
     <div className="App">
@@ -82,7 +76,7 @@ function App() {
           )}
         </>
       </div>
-      <button className='RandomCountryGenerator' onClick={handleClick}> Generate Random Country </button>
+      <button className='RandomCountryGenerator' onClick={randomlySelectedCountry}> Generate Random Country </button>
       <Globe
         id="globe"
         globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
@@ -97,7 +91,7 @@ function App() {
         onPolygonHover={setHoverD}
         onPolygonClick={(e) => {
           addToSelectedCountries(e);
-          randomlySelectedCountry();
+        setSelectionPool(countries.slice(-10));
         }}
 
       />
