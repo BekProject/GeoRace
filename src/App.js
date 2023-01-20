@@ -28,6 +28,11 @@ function App() {
   function addToSelectedCountries(e) {
     if (selectedCountries.includes(e)) {
       console.log(e.properties.ADMIN, " already in list");
+      setSelectedCountries(
+        selectedCountries.filter(
+          (item) => item.properties.ADMIN !== e.properties.ADMIN
+        )
+      );
     } else {
       setSelectedCountries((selectedCountries) => [...selectedCountries, e]);
       console.log(e.properties.ADMIN, " added to selected countries");
