@@ -41,9 +41,9 @@ function App() {
 
   function inAlreadyClicked(e) {
     if (selectedCountries.includes(e)) {
-      return "blue";
+      return "rgb(137 87 229 / 7%)";
     }
-    return "black";
+    return "rgb(22 27 34)";
   }
 
   function randomlySelectedCountry(_without_replacement = true) {
@@ -85,13 +85,13 @@ function App() {
       </button>
       <Globe
         id="globe"
-        globeImageUrl="//unpkg.com/three-globe/example/img/earth-day.jpg"
+        globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
         backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
         polygonsData={countries}
-        polygonAltitude={(d) => (d === hoverD ? 0.05 : 0.005)}
+        polygonAltitude={(d) => (d === hoverD ? 0.03 : 0.02)}
         // polygonCapColor={(d) => (d === hoverD ? "blue" : "black")}
         polygonCapColor={(d) => inAlreadyClicked(d)}
-        polygonSideColor={() => "white"}
+        polygonSideColor={(d) => inAlreadyClicked(d)}
         polygonStrokeColor={() => "white"}
         polygonsTransitionDuration={1}
         onPolygonHover={setHoverD}
