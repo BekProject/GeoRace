@@ -32,6 +32,12 @@ function App() {
   //   if(isoCode in countries.properties.)
   // }
 
+  /* 
+Create function to display name of randomly selected country
+Cross refernce guess between randomly selected country
+Tell user if their guess is correct or not
+  */ 
+
   function addToSelectedCountries(e) {
     if (selectedCountries.includes(e)) {
       console.log(e.properties.ADMIN, ' already in list')
