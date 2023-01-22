@@ -8,7 +8,7 @@ function App() {
   const [countries, setCountries] = useState({ features: [] });
   const [hoverD, setHoverD] = useState();
   const [selectedCountries, setSelectedCountries] = useState([]);
-  var [selectionPool, setSelectionPool] = useState([]);
+  const [selectionPool, setSelectionPool] = useState([]);
 
   useEffect(() => {
     // load data
@@ -52,9 +52,9 @@ Tell user if their guess is correct or not
   }
 
   function randomlySelectedCountry(_without_replacement = true) {
-    if (selectionPool.length === 0) {
+    if (selectionPool.length === 5) {
       console.log("- - - - - - - - reseting selection pool - - - - - - - -");
-      selectionPool = [...countries];
+      setSelectionPool([...countries]);
       selectRandomCountry();
     } else {
       selectRandomCountry();
@@ -64,7 +64,13 @@ Tell user if their guess is correct or not
   function selectRandomCountry(_without_replacement = true) {
     var randomCountry =
       selectionPool[Math.floor(Math.random() * selectionPool.length)]; // select random country from the selection pool
-    selectionPool.splice(selectionPool.indexOf(randomCountry), 1); // remove selected country from selection pool
+
+      setSelectionPool(
+        selectionPool.filter(
+          (item) => item != randomCountry
+        )
+      );
+    
     console.log("Randomly Selected Country: ", randomCountry.properties.ADMIN);
   }
 
