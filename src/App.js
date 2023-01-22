@@ -14,11 +14,10 @@ function App() {
     // load data
     fetch(countriesz)
       .then((res) => res.json())
-      .then(({ features }) => setCountries(features));
-
-    fetch(countriesz)
-      .then((res) => res.json())
-      .then(({ features }) => setSelectionPool(features));
+      .then(({ features }) => {
+        setCountries(features);
+        setSelectionPool(features);
+      });
   }, []);
 
   // function checkSelectedCountriesList(isoCode){
@@ -80,15 +79,12 @@ function App() {
         className="RandomCountryGenerator"
         onClick={randomlySelectedCountry}
       >
-        {" "}
-        Generate Random Country{" "}
+        Generate Random Country
       </button>
       <Globe
         id="globe"
-        globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
-        backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
         polygonsData={countries}
-        polygonAltitude={(d) => (d === hoverD ? 0.03 : 0.02)}
+        polygonAltitude={(d) => (d === hoverD ? 0.0145 : 0.01)}
         // polygonCapColor={(d) => (d === hoverD ? "blue" : "black")}
         polygonCapColor={(d) => inAlreadyClicked(d)}
         polygonSideColor={(d) => inAlreadyClicked(d)}
