@@ -9,6 +9,8 @@ function App() {
   const [hoverD, setHoverD] = useState();
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [selectionPool, setSelectionPool] = useState([]);
+  var [randomCountry, setRandomCountry] = useState();
+  const [randomCountryName, setRandomCountryName] = useState();
 
   useEffect(() => {
     // load data
@@ -18,6 +20,8 @@ function App() {
         setCountries(features);
         setSelectionPool(features);
       });
+    setRandomCountry(countries[0]);
+    setRandomCountryName('Random Country');
   }, []);
 
   // function checkSelectedCountriesList(isoCode){
@@ -51,27 +55,28 @@ Tell user if their guess is correct or not
     return "rgb(22 27 34)";
   }
 
-  function randomlySelectedCountry(_without_replacement = true) {
-    if (selectionPool.length === 5) {
-      console.log("- - - - - - - - reseting selection pool - - - - - - - -");
-      setSelectionPool([...countries]);
-      selectRandomCountry();
-    } else {
-      selectRandomCountry();
-    }
+  function resetSelectionPool() {
+    setSelectionPool(countries);
+    console.log('selection pool reset to length: ', selectionPool.length)
   }
 
-  function selectRandomCountry(_without_replacement = true) {
-    var randomCountry =
+  function selectRandomCountry() {
+    randomCountry =
       selectionPool[Math.floor(Math.random() * selectionPool.length)]; // select random country from the selection pool
 
-      setSelectionPool(
-        selectionPool.filter(
-          (item) => item != randomCountry
-        )
-      );
-    
+    setRandomCountryName(randomCountry.properties.ADMIN);
+
+    // remove random country from selection pool
+    setSelectionPool(
+      selectionPool.filter((item) => item != randomCountry)
+    );
+
+    console.log('Length of selection pool: ', selectionPool.length);
     console.log("Randomly Selected Country: ", randomCountry.properties.ADMIN);
+
+    if (selectionPool.length === 1){
+      resetSelectionPool()
+    }
   }
 
   return (
@@ -80,16 +85,21 @@ Tell user if their guess is correct or not
         <>
           {selectedCountries.length > 0 && (
             <>
-              {selectedCountries.slice(-3).map((item, index) => (
+              {selectedCountries.map((item, index) => (
                 <h5 key={index}>{item.properties.ADMIN}</h5>
               ))}
             </>
           )}
         </>
       </div>
+      <div className="RandomCountryDisplay">
+        <>
+          <h5 key={1}>{randomCountryName}</h5>
+        </>
+      </div>
       <button
         className="RandomCountryGenerator"
-        onClick={randomlySelectedCountry}
+        onClick={selectRandomCountry}
       >
         Generate Random Country
       </button>
@@ -105,7 +115,6 @@ Tell user if their guess is correct or not
         onPolygonHover={setHoverD}
         onPolygonClick={(e) => {
           addToSelectedCountries(e);
-          setSelectionPool(countries.slice(-10));
         }}
       />
     </div>
