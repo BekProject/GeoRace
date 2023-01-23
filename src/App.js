@@ -9,6 +9,8 @@ function App() {
   const [hoverD, setHoverD] = useState();
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [selectionPool, setSelectionPool] = useState([]);
+  var [randomCountry, setRandomCountry] = useState();
+  const [randomCountryName, setRandomCountryName] = useState();
 
   useEffect(() => {
     // load data
@@ -18,6 +20,8 @@ function App() {
         setCountries(features);
         setSelectionPool(features);
       });
+    setRandomCountry(countries[0]);
+    setRandomCountryName('Random Country');
   }, []);
 
   // function checkSelectedCountriesList(isoCode){
@@ -85,16 +89,21 @@ Tell user if their guess is correct or not
         <>
           {selectedCountries.length > 0 && (
             <>
-              {selectedCountries.slice(-3).map((item, index) => (
+              {selectedCountries.map((item, index) => (
                 <h5 key={index}>{item.properties.ADMIN}</h5>
               ))}
             </>
           )}
         </>
       </div>
+      <div className="RandomCountryDisplay">
+        <>
+          <h5 key={1}>{randomCountryName}</h5>
+        </>
+      </div>
       <button
         className="RandomCountryGenerator"
-        onClick={randomlySelectedCountry}
+        onClick={selectRandomCountry}
       >
         Generate Random Country
       </button>
