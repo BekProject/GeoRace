@@ -39,3 +39,13 @@ html{
     color: black;
     right: 300px;
 }
+
+.RandomCountryDisplay{
+    color: white;
+    height: 100px;
+    width: 100px;
+    background-color: black;
+    position: absolute;
+    right: 500px;
+    z-index: 100;
+}
