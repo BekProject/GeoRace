@@ -49,3 +49,20 @@ html{
     right: 500px;
     z-index: 100;
 }
+
+#CorrectOrWrong{
+    color: white;
+    height: 100px; 
+    width: 100px; 
+    z-index: 100;
+    right: 100px; 
+    position: absolute;
+}
+
+.background-green{
+    background-color: green;
+}
+
+.background-red{
+    background-color: red;
+}
