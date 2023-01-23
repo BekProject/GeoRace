@@ -91,7 +91,7 @@ Tell user if their guess is correct or not
         <>
           {selectedCountries.length > 0 && (
             <>
-              {selectedCountries.map((item, index) => (
+              {selectedCountries.slice(-3).map((item, index) => (
                 <h5 key={index}>{item.properties.ADMIN}</h5>
               ))}
             </>
