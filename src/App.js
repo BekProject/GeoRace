@@ -81,6 +81,8 @@ Tell user if their guess is correct or not
       "Randomly Selected Country: ",
       randomCountry.properties.ADMIN
     );
+
+    setRandomCountryName(randomCountry.properties.ADMIN);
   }
 
   return (
