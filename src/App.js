@@ -28,7 +28,7 @@ function App() {
 Create function to display name of randomly selected country
 Cross refernce guess between randomly selected country
 Tell user if their guess is correct or not
-  */ 
+  */
 
   function addToSelectedCountries(e) {
     if (selectedCountries.includes(e)) {
@@ -51,27 +51,32 @@ Tell user if their guess is correct or not
     return "rgb(22 27 34)";
   }
 
-  function randomlySelectedCountry(_without_replacement = true) {
-    if (selectionPool.length === 5) {
+  function randomlySelectedCountry() {
+    if (selectionPool.length === 1) {
       console.log("- - - - - - - - reseting selection pool - - - - - - - -");
-      setSelectionPool([...countries]);
-      selectRandomCountry();
+      setSelectionPool(countries);
+      selectRandomCountry(true);
     } else {
-      selectRandomCountry();
+      selectRandomCountry(false);
     }
   }
 
-  function selectRandomCountry(_without_replacement = true) {
-    var randomCountry =
-      selectionPool[Math.floor(Math.random() * selectionPool.length)]; // select random country from the selection pool
+  function selectRandomCountry(reset) {
+    let randomCountry;
 
-      setSelectionPool(
-        selectionPool.filter(
-          (item) => item != randomCountry
-        )
-      );
-    
-    console.log("Randomly Selected Country: ", randomCountry.properties.ADMIN);
+    if (!reset) {
+      randomCountry =
+        selectionPool[Math.floor(Math.random() * selectionPool.length)]; // select random country from the selection pool
+      setSelectionPool(selectionPool.filter((item) => item !== randomCountry));
+    } else {
+      randomCountry =
+        selectionPool[Math.floor(Math.random() * selectionPool.length)];
+    }
+
+    console.table(
+      "Randomly Selected Country: ",
+      randomCountry.properties.ADMIN
+    );
   }
 
   return (
@@ -105,7 +110,6 @@ Tell user if their guess is correct or not
         onPolygonHover={setHoverD}
         onPolygonClick={(e) => {
           addToSelectedCountries(e);
-          setSelectionPool(countries.slice(-10));
         }}
       />
     </div>
