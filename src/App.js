@@ -11,6 +11,7 @@ function App() {
   const [selectionPool, setSelectionPool] = useState([]);
   var [randomCountry, setRandomCountry] = useState();
   const [randomCountryName, setRandomCountryName] = useState();
+  const [correctOrWrong, setCorrectOrWrong] = useState();
 
   useEffect(() => {
     // load data
@@ -22,6 +23,7 @@ function App() {
       });
     setRandomCountry(countries[0]);
     setRandomCountryName('Random Country');
+    setCorrectOrWrong('Neutral');
   }, []);
 
   // function checkSelectedCountriesList(isoCode){
@@ -49,10 +51,25 @@ Tell user if their guess is correct or not
   }
 
   function inAlreadyClicked(e) {
-    if (selectedCountries.includes(e)) {
+
+    const selectedCountryIndex = selectedCountries.indexOf(e);
+
+    // if country is not selected
+    if (selectedCountryIndex === -1) {
+      return "rgb(22 27 34)";
+    }
+    
+    // if country is most recently selected
+    if (selectedCountryIndex === selectedCountries.length-1) {
+      return 'rgb(255 255 255)';
+    }
+
+    // if country is within recent 3 
+    if (selectedCountryIndex > selectedCountries.length-4){
       return "rgb(137 87 229 / 7%)";
     }
-    return "rgb(22 27 34)";
+
+
   }
 
   function randomlySelectedCountry() {
@@ -72,9 +89,11 @@ Tell user if their guess is correct or not
       randomCountry =
         selectionPool[Math.floor(Math.random() * selectionPool.length)]; // select random country from the selection pool
       setSelectionPool(selectionPool.filter((item) => item !== randomCountry));
+      setRandomCountryName(randomCountry.properties.ADMIN);
     } else {
       randomCountry =
         selectionPool[Math.floor(Math.random() * selectionPool.length)];
+        setRandomCountryName(randomCountry.properties.ADMIN);
     }
 
     console.table(
@@ -82,7 +101,18 @@ Tell user if their guess is correct or not
       randomCountry.properties.ADMIN
     );
 
-    setRandomCountryName(randomCountry.properties.ADMIN);
+  }
+
+  function isThisCorrect(e) {
+    if (e.properties.ADMIN === randomCountryName) {
+      setCorrectOrWrong('Correct');
+      console.log('country corect');
+    } else {
+      setCorrectOrWrong('Incorrect');
+      console.log('country incorrect');
+    }
+
+    console.log('this has been ran');
   }
 
   return (
@@ -98,11 +128,19 @@ Tell user if their guess is correct or not
           )}
         </>
       </div>
+
       <div className="RandomCountryDisplay">
         <>
-          <h5 key={1}>{randomCountryName}</h5>
+          <h5 key={21}>{randomCountryName}</h5>
         </>
       </div>
+
+      <div className={correctOrWrong==='Incorrect' ? 'background-red' : 'background-green'} id='CorrectOrWrong'>
+        <>
+          <h5 key={184} >{correctOrWrong}</h5>
+        </>
+      </div>
+
       <button
         className="RandomCountryGenerator"
         onClick={selectRandomCountry}
@@ -121,6 +159,7 @@ Tell user if their guess is correct or not
         onPolygonHover={setHoverD}
         onPolygonClick={(e) => {
           addToSelectedCountries(e);
+          isThisCorrect(e);
         }}
       />
     </div>
