@@ -12,6 +12,9 @@ function App() {
   var [randomCountry, setRandomCountry] = useState();
   const [randomCountryName, setRandomCountryName] = useState();
   const [correctOrWrong, setCorrectOrWrong] = useState();
+  const [selectedCountry, setSelectedCountry] = useState();
+
+  const selectedHistoryLength = 3;
 
   useEffect(() => {
     // load data
@@ -48,6 +51,9 @@ Tell user if their guess is correct or not
       setSelectedCountries((selectedCountries) => [...selectedCountries, e]);
       console.log(e.properties.ADMIN, " added to selected countries");
     }
+
+    setSelectedCountry(e);
+    console.log('Selected Coutry set to: ', e.properties.ADMIN);
   }
 
   function inAlreadyClicked(e) {
@@ -65,9 +71,12 @@ Tell user if their guess is correct or not
     }
 
     // if country is within recent 3 
-    if (selectedCountryIndex > selectedCountries.length-4){
+    if (selectedCountryIndex > selectedCountries.length-1-selectedHistoryLength){
       return "rgb(137 87 229 / 7%)";
     }
+
+    return "rgb(22 27 34)";
+
 
 
   }
@@ -121,7 +130,7 @@ Tell user if their guess is correct or not
         <>
           {selectedCountries.length > 0 && (
             <>
-              {selectedCountries.slice(-3).map((item, index) => (
+              {selectedCountries.slice(-selectedHistoryLength).map((item, index) => (
                 <h5 key={index}>{item.properties.ADMIN}</h5>
               ))}
             </>
