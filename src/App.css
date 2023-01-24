@@ -1,9 +1,9 @@
-h3{
+h5{
     margin: 0;
 }
 
 html{
-    background-color: red;
+    background-color: rgb(0, 0, 0);
 }
 
 .App{
@@ -18,16 +18,15 @@ html{
     margin-top: 5px;
     border-radius: 3px;
     z-index: 100;
-    width: 240px;
-    height: 200px;
+    width: 250px;
+    height: 80px;
     background-color: rgba(50, 49, 49, 0.765);
     box-sizing: border-box;
-    padding: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
     color: white;
+    font-weight: 100;
+    border: 1px solid rgb(105, 105, 105);
 }
 
 .RandomCountryGenerator{
@@ -48,6 +47,7 @@ html{
     position: absolute;
     right: 500px;
     z-index: 100;
+
 }
 
 #CorrectOrWrong{
@@ -66,3 +66,42 @@ html{
 .background-red{
     background-color: red;
 }
+
+.currentRandomCountryContainer{
+    height: 100%;
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-content: center;
+    line-height: 40px;
+    font-size: 15px;
+    border-bottom: 1px solid rgb(105, 105, 105);
+    box-sizing: border-box;
+    padding-left: 20px;
+}
+
+.currentRandomCountryStatsContainer{
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto  auto;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.currentRandomCountryStatsContainer h5{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+#bestStreakId{
+    border-left: 1px solid rgb(105, 105, 105);
+    justify-content: center;
+    height: 100%;
+}
+
+
+
