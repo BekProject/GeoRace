@@ -2,6 +2,7 @@ import Globe from "react-globe.gl";
 import { useState, useEffect } from "react";
 import countriesz from "../mapData/worldBorders.geojson";
 import toast from "react-hot-toast";
+import { useStateContext } from "../context";
 
 const correctCountry = () => {
   toast.success("Correct!", { duration: 1000 });
@@ -20,11 +21,12 @@ function wrongCountry(country) {
 }
 
 function GameTest() {
+  const { stats, globeRef } = useStateContext();
+
   const [countries, setCountries] = useState({ features: [] });
   const [hoverD, setHoverD] = useState();
   const [selectionPool, setSelectionPool] = useState([]);
   const [randomCountryName, setRandomCountryName] = useState();
-  const [start, setStart] = useState(false);
   const [wrongCountries, setWrongCountries] = useState([]);
   const [correctCountries, setCorrectCountries] = useState([]);
   const [streak, setStreak] = useState(0);
@@ -37,8 +39,13 @@ function GameTest() {
       .then(({ features }) => {
         setCountries(features);
         setSelectionPool(features);
+        var randomCountry =
+          features[Math.floor(Math.random() * features.length)];
+        setRandomCountryName(randomCountry.properties.ADMIN);
+        globeRef.current.controls().autoRotate = true;
+        globeRef.current.controls().autoRotateSpeed = 0.3;
       });
-  }, []);
+  }, [globeRef]);
 
   function inAlreadyClicked(e) {
     if (wrongCountries.includes(e)) {
@@ -101,20 +108,23 @@ function GameTest() {
     }
   }
 
-  return start ? (
+  return (
     <div className="App">
-      <div className="HoverInformation">
-        <div className="currentRandomCountryContainer">
-          <h5>Country : {randomCountryName}</h5>
+      {stats && (
+        <div className="HoverInformation">
+          <div className="currentRandomCountryContainer">
+            <h5>Country : {randomCountryName}</h5>
+          </div>
+          <div className="currentRandomCountryStatsContainer">
+            <h5>Streak 🔥 : {streak} </h5>
+            <h5 id="bestStreakId">wrong ❌ : {totalIncorrect}</h5>
+          </div>
         </div>
-        <div className="currentRandomCountryStatsContainer">
-          <h5>Streak 🔥 : {streak} </h5>
-          <h5 id="bestStreakId">wrong ❌ : {totalIncorrect}</h5>
-        </div>
-      </div>
+      )}
 
       <Globe
         id="globe"
+        ref={globeRef}
         polygonsData={countries}
         polygonAltitude={(d) => (d === hoverD ? 0.0145 : 0.01)}
         // polygonCapColor={(d) => (d === hoverD ? "blue" : "black")}
@@ -126,19 +136,10 @@ function GameTest() {
         onPolygonClick={(e) => {
           isThisCorrect(e);
         }}
+        globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
+        backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
       />
     </div>
-  ) : (
-    <>
-      <button
-        onClick={() => {
-          getRandomCountry();
-          setStart(true);
-        }}
-      >
-        Click to start!
-      </button>
-    </>
   );
 }
 export default GameTest;
