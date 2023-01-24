@@ -11,6 +11,10 @@ const correctCountry = () => {
 //   toast.error(`Wrong. That is ${country}`);
 // };
 
+function alreadyCorrect() {
+  toast.error("already got this correct", { duration: 2000 });
+}
+
 function wrongCountry(country) {
   toast.error(`Wrong Country. That is  ${country}`, { duration: 1000 });
 }
@@ -23,6 +27,8 @@ function GameTest() {
   const [start, setStart] = useState(false);
   const [wrongCountries, setWrongCountries] = useState([]);
   const [correctCountries, setCorrectCountries] = useState([]);
+  const [streak, setStreak] = useState(0);
+  const [totalIncorrect, setTotalIncorrect] = useState(0);
 
   useEffect(() => {
     // load data
@@ -78,13 +84,20 @@ function GameTest() {
     if (e.properties.ADMIN === randomCountryName) {
       setCorrectCountries((correctCountries) => [...correctCountries, e]);
       console.log("right");
+      setStreak((streak) => streak + 1);
       correctCountry();
 
       getRandomCountry();
     } else {
-      setWrongCountries((wrongCountries) => [...wrongCountries, e]);
-      console.log("wrong");
-      wrongCountry(e.properties.ADMIN);
+      if (correctCountries.includes(e)) {
+        alreadyCorrect();
+      } else {
+        setWrongCountries((wrongCountries) => [...wrongCountries, e]);
+        console.log("wrong");
+        setStreak((streak) => 0);
+        setTotalIncorrect((totalIncorrect) => totalIncorrect + 1);
+        wrongCountry(e.properties.ADMIN);
+      }
     }
   }
 
@@ -92,12 +105,11 @@ function GameTest() {
     <div className="App">
       <div className="HoverInformation">
         <div className="currentRandomCountryContainer">
-          <h5>{randomCountryName}</h5>
+          <h5>Country : {randomCountryName}</h5>
         </div>
         <div className="currentRandomCountryStatsContainer">
-          <h5>Streak🔥 : 3 </h5>
-          <h5 id="bestStreakId">Best👑 : 6</h5>
-          <h5 id="bestStreakId">Level🧠 : 6</h5>
+          <h5>Streak 🔥 : {streak} </h5>
+          <h5 id="bestStreakId">wrong ❌ : {totalIncorrect}</h5>
         </div>
       </div>
 
