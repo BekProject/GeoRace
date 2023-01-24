@@ -1,10 +1,17 @@
 import React from "react";
-import Game from "./Game";
+// import Game from "./Game";
+import GameTest from "./TestGame";
+import { Toaster } from "react-hot-toast";
 
 function Layout() {
   return (
     <div className="layout">
-      <Game />
+      <GameTest />
+      <Toaster
+        position="bottom-center"
+        closeOnClick={true}
+        reverseOrder={false}
+      />
     </div>
   );
 }

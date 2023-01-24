@@ -12,7 +12,9 @@
     "react-d3": "^0.4.0",
     "react-dom": "^18.2.0",
     "react-globe.gl": "^2.22.10",
+    "react-hot-toast": "^2.4.0",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.1.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

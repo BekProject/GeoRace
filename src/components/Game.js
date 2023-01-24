@@ -1,13 +1,23 @@
 import Globe from "react-globe.gl";
 import { useState, useEffect } from "react";
 import countriesz from "../mapData/worldBorders.geojson";
+import { useStateContext } from "../context";
+import toast from "react-hot-toast";
+
+const correctCountry = () => {
+  toast.success("Wrong Country!");
+};
+
+const wrongCountry = () => {
+  toast.error("Right Country!");
+};
 
 function Game() {
   const [countries, setCountries] = useState({ features: [] });
   const [hoverD, setHoverD] = useState();
   const [selectedCountries, setSelectedCountries] = useState([]);
   const [selectionPool, setSelectionPool] = useState([]);
-  var [randomCountry, setRandomCountry] = useState();
+  var [randomCountry, setRandomCountry] = useState(countries[0]);
   const [randomCountryName, setRandomCountryName] = useState();
   const [correctOrWrong, setCorrectOrWrong] = useState();
   const [selectedCountry, setSelectedCountry] = useState();
@@ -22,7 +32,6 @@ function Game() {
         setCountries(features);
         setSelectionPool(features);
       });
-    setRandomCountry(countries[0]);
     setRandomCountryName("Random Country");
     setCorrectOrWrong("Neutral");
   }, []);
@@ -78,15 +87,15 @@ Tell user if their guess is correct or not
     return "rgb(22 27 34)";
   }
 
-  function randomlySelectedCountry() {
-    if (selectionPool.length === 1) {
-      console.log("- - - - - - - - reseting selection pool - - - - - - - -");
-      setSelectionPool(countries);
-      selectRandomCountry(true);
-    } else {
-      selectRandomCountry(false);
-    }
-  }
+  // function randomlySelectedCountry() {
+  //   if (selectionPool.length === 1) {
+  //     console.log("- - - - - - - - reseting selection pool - - - - - - - -");
+  //     setSelectionPool(countries);
+  //     selectRandomCountry(true);
+  //   } else {
+  //     selectRandomCountry(false);
+  //   }
+  // }
 
   function selectRandomCountry(reset) {
     let randomCountry;
@@ -141,7 +150,7 @@ Tell user if their guess is correct or not
         </>
       </div>
 
-      <button className="RandomCountryGenerator" onClick={selectRandomCountry}>
+      <button className="RandomCountryGenerator" onClick={correctCountry}>
         Generate Random Country
       </button>
       <Globe
