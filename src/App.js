@@ -27,6 +27,10 @@ function App() {
     setRandomCountry(countries[0]);
     setRandomCountryName('Random Country');
     setCorrectOrWrong('Neutral');
+
+    fetch('/mapData/countryNames.json')
+    .then((response) => response.json())
+    .then((json) => console.log(json));
   }, []);
 
   // function checkSelectedCountriesList(isoCode){
@@ -40,25 +44,34 @@ Tell user if their guess is correct or not
   */
 
   function addToSelectedCountries(e) {
-    if (selectedCountries.includes(e)) {
-      console.log(e.properties.ADMIN, " already in list");
-      setSelectedCountries(
-        selectedCountries.filter(
-          (item) => item.properties.ADMIN !== e.properties.ADMIN
-        )
-      );
-    } else {
-      setSelectedCountries((selectedCountries) => [...selectedCountries, e]);
-      console.log(e.properties.ADMIN, " added to selected countries");
+    // // - - - - - LOGIC 1 - - - - - 
+    // if (selectedCountries.includes(e)) {
+    //   console.log(e.properties.ADMIN, " already in list");
+    //   setSelectedCountries(
+    //     selectedCountries.filter(
+    //       (item) => item.properties.ADMIN !== e.properties.ADMIN
+    //     )
+    //   );
+    // } else {
+    //   setSelectedCountries((selectedCountries) => [...selectedCountries, e]);
+    //   console.log(e.properties.ADMIN, " added to selected countries");
+    // }
+
+    // setSelectedCountry(e);
+    // console.log('Selected Coutry set to: ', e.properties.ADMIN);
+    
+    // - - - - - LOGIC 2 - - - - - 
+    if (selectedCountries.length != 0 && selectedCountries.lastIndexOf(e) === selectedCountries.length - 1) {
+      return 
     }
 
-    setSelectedCountry(e);
-    console.log('Selected Coutry set to: ', e.properties.ADMIN);
+    setSelectedCountries((selectedCountries) => [...selectedCountries, e]);
   }
 
   function inAlreadyClicked(e) {
 
-    const selectedCountryIndex = selectedCountries.indexOf(e);
+    const selectedCountryIndex = selectedCountries.lastIndexOf(e);
+    console.log(e.properties.ADMIN, selectedCountryIndex);
 
     // if country is not selected
     if (selectedCountryIndex === -1) {
@@ -76,8 +89,6 @@ Tell user if their guess is correct or not
     }
 
     return "rgb(22 27 34)";
-
-
 
   }
 
