@@ -5,14 +5,42 @@ import {
   Button,
   ButtonGroup,
   FormControl,
-  Select,
-  MenuItem,
-  InputLabel,
+  InputBase,
+  NativeSelect,
+  Typography,
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
+
+const BootstrapInput = styled(InputBase)(({ theme }) => ({
+  "label + &": {
+    marginTop: theme.spacing(3),
+  },
+  "& .MuiInputBase-input": {
+    borderRadius: 4,
+    position: "relative",
+    backgroundColor: "transparent",
+    border: "1px solid #1976d280",
+    fontSize: "0.975rem",
+    padding: "10px 26px 10px 12px",
+    width: "100%",
+    color: "#1976d2",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    marginTop: theme.spacing(3),
+    FontFamily: "Roboto",
+    // Use the system font instead of the default Roboto font.
+
+    "&:focus": {
+      borderRadius: 4,
+      borderColor: "#80bdff",
+      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
+    },
+  },
+}));
 
 function Menu() {
   const { updateEarthSpin, updateStats, menu, updateMenu } = useStateContext();
   const [userSettingsSelection, setUserSettingSelection] = useState();
+  const [age, setAge] = useState(0);
 
   return menu ? (
     <div className="menuContainer">
@@ -30,9 +58,16 @@ function Menu() {
 
         <div className="menuContainerButtonContainers">
           <div className="menuContainerButtonContainersMax">
-            <p>Select : </p>
+            <Typography
+              variant="body1"
+              component="h1"
+              style={{ color: "#1976d2" }}
+            >
+              Select :
+            </Typography>
+
             <ButtonGroup
-              style={{ width: "100%" }}
+              style={{ width: "100%", marginTop: "10px" }}
               variant="outlined"
               aria-label="outlined button group"
             >
@@ -52,30 +87,27 @@ function Menu() {
               </Button>
               <Button style={{ width: "100%" }}>Custom (in progress)</Button>
             </ButtonGroup>
-
             {userSettingsSelection === 1 ? (
               <>
-                <p>Select : </p>
-                <FormControl style={{ width: "100%" }} fullWidth>
-                  <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    variant="filled"
-                    value={0}
-                    label="Age"
-                    // onChange={handleChange}
+                <FormControl sx={{ width: "100%" }} variant="standard">
+                  <NativeSelect
+                    id="demo-customized-select-native"
+                    value={age}
+                    defaultValue={30}
+                    onChange={(e) => setAge(e.target.value)}
+                    input={<BootstrapInput />}
                   >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
+                    <option value={10}>Asia</option>
+                    <option value={20}>Europe</option>
+                    <option value={30}>South America</option>
+                    <option value={30}>North America</option>
+                    <option value={30}>Australia America</option>
+                  </NativeSelect>
                 </FormControl>
               </>
             ) : (
               <></>
             )}
-
             <Button
               style={{ width: "100%", height: "40px", marginTop: "30px" }}
               variant="outlined"

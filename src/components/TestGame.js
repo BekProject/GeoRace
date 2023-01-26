@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import countriesz from "../mapData/worldBorders.geojson";
 import toast from "react-hot-toast";
 import { useStateContext } from "../context";
+import { Button } from "@mui/material";
 
 const correctCountry = () => {
   toast.success("Correct!", { duration: 1000 });
@@ -21,7 +22,8 @@ function wrongCountry(country) {
 }
 
 function GameTest() {
-  const { stats, globeRef } = useStateContext();
+  const { stats, globeRef, updateEarthSpin, updateMenu, updateStats } =
+    useStateContext();
 
   const [countries, setCountries] = useState({ features: [] });
   const [hoverD, setHoverD] = useState();
@@ -118,6 +120,32 @@ function GameTest() {
           <div className="currentRandomCountryStatsContainer">
             <h5>Streak 🔥 : {streak} </h5>
             <h5 id="bestStreakId">wrong ❌ : {totalIncorrect}</h5>
+          </div>
+          <div
+            className="currentRandomCountryStatsContainer"
+            style={{
+              borderTop: "1px solid rgb(105, 105, 105)",
+              display: "flex",
+              justifyContent: "center",
+              padding: "0px",
+            }}
+          >
+            <Button
+              onClick={() => {
+                updateEarthSpin(true);
+                updateMenu(true);
+                updateStats(false);
+              }}
+              style={{
+                width: "100%",
+                height: "100%",
+                borderRadius: 0,
+                color: "white",
+              }}
+              variant="outlined"
+            >
+              Back to menu
+            </Button>
           </div>
         </div>
       )}
