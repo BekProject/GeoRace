@@ -121,6 +121,27 @@ function GameTest() {
             <h5>Streak 🔥 : {streak} </h5>
             <h5 id="bestStreakId">wrong ❌ : {totalIncorrect}</h5>
           </div>
+          <div className='currentRandomCountryStatsContainer'
+            style={{
+              borderTop: "1px solid rgb(105, 105, 105)",
+              display: "flex",
+              justifyContent: "center",
+              padding: "0px",
+            }}
+          >
+            <Button onClick={() => {
+              getRandomCountry();
+            }}
+            style={{
+              width: "100%",
+              borderRadius: 0,
+              color: "white",
+            }}
+            >
+              Skip Country
+            </Button>
+
+          </div>
           <div
             className="currentRandomCountryStatsContainer"
             style={{
@@ -130,6 +151,7 @@ function GameTest() {
               padding: "0px",
             }}
           >
+
             <Button
               onClick={() => {
                 updateEarthSpin(true);
