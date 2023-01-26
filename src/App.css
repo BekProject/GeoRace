@@ -27,7 +27,7 @@ html{
     border-radius: 3px;
     z-index: 100;
     width: 250px;
-    height: 80px;
+    height: 150px;
     background-color: rgba(50, 49, 49, 0.765);
     box-sizing: border-box;
     display: flex;
