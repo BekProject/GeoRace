@@ -38,9 +38,11 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 function Menu() {
-  const { updateEarthSpin, updateStats, menu, updateMenu } = useStateContext();
+  const { updateEarthSpin, updateStats, menu, updateMenu, continentFilter, updateSetContinent } = useStateContext();
   const [userSettingsSelection, setUserSettingSelection] = useState();
-  const [age, setAge] = useState(0);
+  const [tempValue, setTempValue] = useState(0);
+
+  
 
   return menu ? (
     <div className="menuContainer">
@@ -92,16 +94,48 @@ function Menu() {
                 <FormControl sx={{ width: "100%" }} variant="standard">
                   <NativeSelect
                     id="demo-customized-select-native"
-                    value={age}
-                    defaultValue={30}
-                    onChange={(e) => setAge(e.target.value)}
+                    value={tempValue}
+                    defaultValue={0}
+                    onChange={(e) => {
+                      console.log(e.target.value)
+                      setTempValue(e.target.value)
+
+                      if (e.target.value == 0){
+                        setTempValue(e.target.value);
+                        updateSetContinent('all');
+                      }
+                      if (e.target.value == 10){
+                        setTempValue(e.target.value);
+                        updateSetContinent('Asia');
+                      }
+                      if (e.target.value == 20){
+                        setTempValue(e.target.value);
+                        console.log(continentFilter);
+                        updateSetContinent('Europe');
+                      }
+                      if (e.target.value == 30){
+                        setTempValue(e.target.value);
+                        updateSetContinent('South America');
+                      }
+                      if (e.target.value == 40){
+                        setTempValue(e.target.value);
+                        updateSetContinent('North America');
+                      }
+                      if (e.target.value == 50){
+                        setTempValue(e.target.value);
+                        updateSetContinent('Australia');
+                      }
+
+
+                     }}
                     input={<BootstrapInput />}
                   >
+                    <option value={0}>All</option>
                     <option value={10}>Asia</option>
                     <option value={20}>Europe</option>
                     <option value={30}>South America</option>
-                    <option value={30}>North America</option>
-                    <option value={30}>Australia America</option>
+                    <option value={40}>North America</option>
+                    <option value={50}>Australia</option>
                   </NativeSelect>
                 </FormControl>
               </>
@@ -129,3 +163,6 @@ function Menu() {
 }
 
 export default Menu;
+
+
+
