@@ -2,8 +2,11 @@ import Globe from "react-globe.gl";
 import { useState, useEffect } from "react";
 import countriesz from "../mapData/worldBorders.geojson";
 import toast from "react-hot-toast";
-import { useStateContext } from "../context";
+import { useStateContext} from "../context";
 import { Button } from "@mui/material";
+import { selection } from "d3";
+
+
 
 const correctCountry = () => {
   toast.success("Correct!", { duration: 1000 });
@@ -22,7 +25,7 @@ function wrongCountry(country) {
 }
 
 function GameTest() {
-  const { stats, globeRef, updateEarthSpin, updateMenu, updateStats } =
+  const { stats, globeRef, updateEarthSpin, updateMenu, updateStats, continentFilter } =
     useStateContext();
 
   const [countries, setCountries] = useState({ features: [] });
@@ -31,6 +34,7 @@ function GameTest() {
   const [randomCountryName, setRandomCountryName] = useState();
   const [wrongCountries, setWrongCountries] = useState([]);
   const [correctCountries, setCorrectCountries] = useState([]);
+  const [possibleCountries, setPossibleCountries] = useState([]);
   const [streak, setStreak] = useState(0);
   const [totalIncorrect, setTotalIncorrect] = useState(0);
 
@@ -41,6 +45,7 @@ function GameTest() {
       .then(({ features }) => {
         setCountries(features);
         setSelectionPool(features);
+        setPossibleCountries(features);
         var randomCountry =
           features[Math.floor(Math.random() * features.length)];
         setRandomCountryName(randomCountry.properties.ADMIN);
@@ -48,6 +53,27 @@ function GameTest() {
         globeRef.current.controls().autoRotateSpeed = 0.3;
       });
   }, [globeRef]);
+
+  useEffect(() => {
+    // filter the country
+    console.log('country filtering process began');
+    if (continentFilter !== 'all') {
+      console.log('continenet filter is: ', continentFilter)
+      setSelectionPool(possibleCountries.filter((item) => item.properties.CONTINENT === continentFilter));
+      // getRandomCountry();
+    } else {
+      setSelectionPool(possibleCountries)
+      console.log('continenet filter is: all');
+      // getRandomCountry();
+    
+    }
+  }, [continentFilter])
+
+  useEffect(() => {
+    // whenever the menu is put away
+    getRandomCountry();
+    
+  }, [updateMenu])
 
   function inAlreadyClicked(e) {
     if (wrongCountries.includes(e)) {
@@ -68,34 +94,39 @@ function GameTest() {
   //   }
   // }
 
-  function getRandomCountry(reset) {
+  function getRandomCountry() {
+
+    // do not select a random country if the selection pool has not been created
+    if (selectionPool.length === 0){
+      return;
+    }
+
     let randomCountry;
     setWrongCountries([]);
 
-    if (!reset) {
-      randomCountry =
+    randomCountry =
         selectionPool[Math.floor(Math.random() * selectionPool.length)]; // select random country from the selection pool
+
+    setRandomCountryName(randomCountry.properties.ADMIN);
+    console.log(randomCountry);
+
+    if (selectionPool.length === 1){
       setSelectionPool(selectionPool.filter((item) => item !== randomCountry));
-      setRandomCountryName(randomCountry.properties.ADMIN);
-    } else {
-      randomCountry =
-        selectionPool[Math.floor(Math.random() * selectionPool.length)];
-      setRandomCountryName(randomCountry.properties.ADMIN);
     }
 
     console.table(
-      "Randomly Selected Country: ",
-      randomCountry.properties.ADMIN
+      "Randomly Selected Country's continent: ",
+      randomCountry.properties.CONTINENT
     );
   }
 
   function isThisCorrect(e) {
+    console.log(e);
     if (e.properties.ADMIN === randomCountryName) {
       setCorrectCountries((correctCountries) => [...correctCountries, e]);
       console.log("right");
       setStreak((streak) => streak + 1);
       correctCountry();
-
       getRandomCountry();
     } else {
       if (correctCountries.includes(e)) {
@@ -150,9 +181,9 @@ function GameTest() {
               justifyContent: "center",
               padding: "0px",
             }}
-          >
+          >``
 
-            <Button
+            <Button id='BackToMainMenuButton'
               onClick={() => {
                 updateEarthSpin(true);
                 updateMenu(true);
