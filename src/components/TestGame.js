@@ -2,11 +2,8 @@ import Globe from "react-globe.gl";
 import { useState, useEffect } from "react";
 import countriesz from "../mapData/worldBorders.geojson";
 import toast from "react-hot-toast";
-import { useStateContext} from "../context";
+import { useStateContext } from "../context";
 import { Button } from "@mui/material";
-import { selection } from "d3";
-
-
 
 const correctCountry = () => {
   toast.success("Correct!", { duration: 1000 });
@@ -25,8 +22,14 @@ function wrongCountry(country) {
 }
 
 function GameTest() {
-  const { stats, globeRef, updateEarthSpin, updateMenu, updateStats, continentFilter } =
-    useStateContext();
+  const {
+    stats,
+    globeRef,
+    updateEarthSpin,
+    updateMenu,
+    updateStats,
+    continentFilter,
+  } = useStateContext();
 
   const [countries, setCountries] = useState({ features: [] });
   const [hoverD, setHoverD] = useState();
@@ -56,24 +59,27 @@ function GameTest() {
 
   useEffect(() => {
     // filter the country
-    console.log('country filtering process began');
-    if (continentFilter !== 'all') {
-      console.log('continenet filter is: ', continentFilter)
-      setSelectionPool(possibleCountries.filter((item) => item.properties.CONTINENT === continentFilter));
+    console.log("country filtering process began");
+    if (continentFilter !== "all") {
+      console.log("continenet filter is: ", continentFilter);
+      setSelectionPool(
+        possibleCountries.filter(
+          (item) => item.properties.CONTINENT === continentFilter
+        )
+      );
       // getRandomCountry();
     } else {
-      setSelectionPool(possibleCountries)
-      console.log('continenet filter is: all');
+      setSelectionPool(possibleCountries);
+      console.log("continenet filter is: all");
       // getRandomCountry();
-    
-    }
-  }, [continentFilter])
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [continentFilter]);
 
   useEffect(() => {
     // whenever the menu is put away
     getRandomCountry();
-    
-  }, [updateMenu])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateMenu]);
 
   function inAlreadyClicked(e) {
     if (wrongCountries.includes(e)) {
@@ -81,6 +87,9 @@ function GameTest() {
     }
     if (correctCountries.includes(e)) {
       return "green";
+    }
+    if (e === hoverD) {
+      return "yellow";
     } else return "#0d1116";
   }
 
@@ -95,9 +104,8 @@ function GameTest() {
   // }
 
   function getRandomCountry() {
-
     // do not select a random country if the selection pool has not been created
-    if (selectionPool.length === 0){
+    if (selectionPool.length === 0) {
       return;
     }
 
@@ -105,12 +113,12 @@ function GameTest() {
     setWrongCountries([]);
 
     randomCountry =
-        selectionPool[Math.floor(Math.random() * selectionPool.length)]; // select random country from the selection pool
+      selectionPool[Math.floor(Math.random() * selectionPool.length)]; // select random country from the selection pool
 
     setRandomCountryName(randomCountry.properties.ADMIN);
     console.log(randomCountry);
 
-    if (selectionPool.length === 1){
+    if (selectionPool.length === 1) {
       setSelectionPool(selectionPool.filter((item) => item !== randomCountry));
     }
 
@@ -152,7 +160,8 @@ function GameTest() {
             <h5>Streak 🔥 : {streak} </h5>
             <h5 id="bestStreakId">wrong ❌ : {totalIncorrect}</h5>
           </div>
-          <div className='currentRandomCountryStatsContainer'
+          <div
+            className="currentRandomCountryStatsContainer"
             style={{
               borderTop: "1px solid rgb(105, 105, 105)",
               display: "flex",
@@ -160,18 +169,18 @@ function GameTest() {
               padding: "0px",
             }}
           >
-            <Button onClick={() => {
-              getRandomCountry();
-            }}
-            style={{
-              width: "100%",
-              borderRadius: 0,
-              color: "white",
-            }}
+            <Button
+              onClick={() => {
+                getRandomCountry();
+              }}
+              style={{
+                width: "100%",
+                borderRadius: 0,
+                color: "white",
+              }}
             >
               Skip Country
             </Button>
-
           </div>
           <div
             className="currentRandomCountryStatsContainer"
@@ -181,9 +190,9 @@ function GameTest() {
               justifyContent: "center",
               padding: "0px",
             }}
-          >``
-
-            <Button id='BackToMainMenuButton'
+          >
+            <Button
+              id="BackToMainMenuButton"
               onClick={() => {
                 updateEarthSpin(true);
                 updateMenu(true);

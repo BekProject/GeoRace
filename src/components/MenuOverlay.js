@@ -38,11 +38,16 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 }));
 
 function Menu() {
-  const { updateEarthSpin, updateStats, menu, updateMenu, continentFilter, updateSetContinent } = useStateContext();
+  const {
+    updateEarthSpin,
+    updateStats,
+    menu,
+    updateMenu,
+    continentFilter,
+    updateSetContinent,
+  } = useStateContext();
   const [userSettingsSelection, setUserSettingSelection] = useState();
   const [tempValue, setTempValue] = useState(0);
-
-  
 
   return menu ? (
     <div className="menuContainer">
@@ -97,37 +102,35 @@ function Menu() {
                     value={tempValue}
                     defaultValue={0}
                     onChange={(e) => {
-                      console.log(e.target.value)
-                      setTempValue(e.target.value)
+                      console.log(e.target.value);
+                      setTempValue(e.target.value);
 
-                      if (e.target.value == 0){
+                      if (e.target.value === "0") {
                         setTempValue(e.target.value);
-                        updateSetContinent('all');
+                        updateSetContinent("all");
                       }
-                      if (e.target.value == 10){
+                      if (e.target.value === "10") {
                         setTempValue(e.target.value);
-                        updateSetContinent('Asia');
+                        updateSetContinent("Asia");
                       }
-                      if (e.target.value == 20){
+                      if (e.target.value === "20") {
                         setTempValue(e.target.value);
                         console.log(continentFilter);
-                        updateSetContinent('Europe');
+                        updateSetContinent("Europe");
                       }
-                      if (e.target.value == 30){
+                      if (e.target.value === "30") {
                         setTempValue(e.target.value);
-                        updateSetContinent('South America');
+                        updateSetContinent("South America");
                       }
-                      if (e.target.value == 40){
+                      if (e.target.value === "40") {
                         setTempValue(e.target.value);
-                        updateSetContinent('North America');
+                        updateSetContinent("North America");
                       }
-                      if (e.target.value == 50){
+                      if (e.target.value === "50") {
                         setTempValue(e.target.value);
-                        updateSetContinent('Australia');
+                        updateSetContinent("Australia");
                       }
-
-
-                     }}
+                    }}
                     input={<BootstrapInput />}
                   >
                     <option value={0}>All</option>
@@ -163,6 +166,3 @@ function Menu() {
 }
 
 export default Menu;
-
-
-
