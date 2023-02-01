@@ -6,8 +6,8 @@ export const StateContext = ({ children }) => {
   const [menu, setMenu] = useState(true);
   const [stats, setStats] = useState(false);
   const globeRef = useRef();
-  const [continentFilter, setContinentFilter] = useState('all');
-
+  const [continentFilter, setContinentFilter] = useState("all");
+  const [screen, setScreen] = useState(0);
 
   const updateMenu = (e) => {
     setMenu(e);
@@ -23,10 +23,12 @@ export const StateContext = ({ children }) => {
 
   const updateSetContinent = (e) => {
     setContinentFilter(e);
-    console.log('continenter filter updated');
-  }
+    console.log("continenter filter updated");
+  };
 
-  
+  const updateScreen = (e) => {
+    setScreen(e);
+  };
 
   return (
     <Context.Provider
@@ -39,6 +41,8 @@ export const StateContext = ({ children }) => {
         updateStats,
         updateEarthSpin,
         updateSetContinent,
+        screen,
+        updateScreen,
       }}
     >
       {children}
