@@ -54,8 +54,10 @@ function GameTest() {
       });
   }, [globeRef]);
 
+
+
   useEffect(() => {
-    // filter the country
+    // filter  selectionPool every time the filter is changed
     console.log('country filtering process began');
     if (continentFilter !== 'all') {
       console.log('continenet filter is: ', continentFilter)
@@ -72,6 +74,13 @@ function GameTest() {
   useEffect(() => {
     // whenever the menu is put away
     getRandomCountry();
+
+    if (selectionPool.length !== 0){
+      selectionPool.forEach((e) => 
+      {
+        console.log(e.properties.ADMIN, ' ', e.properties.CONTINENT);
+      })
+    }
     
   }, [updateMenu])
 
@@ -114,8 +123,7 @@ function GameTest() {
       setSelectionPool(selectionPool.filter((item) => item !== randomCountry));
     }
 
-    console.table(
-      "Randomly Selected Country's continent: ",
+    console.log('randomly selected: ', randomCountry.properties.ADMIN, ' ',
       randomCountry.properties.CONTINENT
     );
   }
