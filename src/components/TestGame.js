@@ -57,16 +57,14 @@ function GameTest() {
       });
   }, [globeRef]);
 
+
+
   useEffect(() => {
-    // filter the country
-    console.log("country filtering process began");
-    if (continentFilter !== "all") {
-      console.log("continenet filter is: ", continentFilter);
-      setSelectionPool(
-        possibleCountries.filter(
-          (item) => item.properties.CONTINENT === continentFilter
-        )
-      );
+    // filter  selectionPool every time the filter is changed
+    console.log('country filtering process began');
+    if (continentFilter !== 'all') {
+      console.log('continenet filter is: ', continentFilter)
+      setSelectionPool(possibleCountries.filter((item) => item.properties.CONTINENT === continentFilter));
       // getRandomCountry();
     } else {
       setSelectionPool(possibleCountries);
@@ -78,8 +76,15 @@ function GameTest() {
   useEffect(() => {
     // whenever the menu is put away
     getRandomCountry();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [updateMenu]);
+
+    if (selectionPool.length !== 0){
+      selectionPool.forEach((e) => 
+      {
+        console.log(e.properties.ADMIN, ' ', e.properties.CONTINENT);
+      })
+    }
+    
+  }, [updateMenu])
 
   function inAlreadyClicked(e) {
     if (wrongCountries.includes(e)) {
@@ -122,8 +127,7 @@ function GameTest() {
       setSelectionPool(selectionPool.filter((item) => item !== randomCountry));
     }
 
-    console.table(
-      "Randomly Selected Country's continent: ",
+    console.log('randomly selected: ', randomCountry.properties.ADMIN, ' ',
       randomCountry.properties.CONTINENT
     );
   }

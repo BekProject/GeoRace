@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useRef } from "react";
+import React, { createContext, useContext, useState, useRef, continentFilter } from "react";
 
 const Context = createContext();
 
@@ -40,9 +40,13 @@ export const StateContext = ({ children }) => {
         updateMenu,
         updateStats,
         updateEarthSpin,
+<<<<<<< HEAD
         updateSetContinent,
         screen,
         updateScreen,
+=======
+        updateSetContinent
+>>>>>>> feature/country-lists
       }}
     >
       {children}
