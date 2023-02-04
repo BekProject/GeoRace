@@ -40,13 +40,9 @@ export const StateContext = ({ children }) => {
         updateMenu,
         updateStats,
         updateEarthSpin,
-<<<<<<< HEAD
         updateSetContinent,
         screen,
         updateScreen,
-=======
-        updateSetContinent
->>>>>>> feature/country-lists
       }}
     >
       {children}
