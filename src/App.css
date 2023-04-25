@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&display=swap');
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 *{
     font-family: 'Arimo', sans-serif;
 }
-
 
 h5{
     margin: 0;
@@ -19,6 +20,8 @@ html{
     width: 100vw;
     height: 100vh;
 }
+
+
 
 .HoverInformation{
     position: absolute;
@@ -55,7 +58,6 @@ html{
     position: absolute;
     right: 500px;
     z-index: 100;
-
 }
 
 #CorrectOrWrong{
@@ -111,4 +113,10 @@ html{
     height: 100%;
 }
 
+#alogoliSearch{
+    background-origin: border-box;
+    position: -ms-page;
+    position: absolute;
+    right: 0;
 
+}

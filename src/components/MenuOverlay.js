@@ -10,7 +10,6 @@ function Menu() {
   return menu ? (
     <div className="menuContainer">
       <div className="menuContainerMax">
-        <h1 id="menuContainerTitle">GeoRacer</h1>
         {screen === 0 ? <MainMenu /> : <></>}
         {screen === 1 ? <GameSelection /> : <></>}
       </div>

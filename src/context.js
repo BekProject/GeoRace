@@ -8,6 +8,16 @@ export const StateContext = ({ children }) => {
   const globeRef = useRef();
   const [continentFilter, setContinentFilter] = useState("all");
   const [screen, setScreen] = useState(1);
+  const [score, setScore] = useState(0);
+  const [highest, setHighest] = useState(0);
+
+  const updateScore = (e) => {
+    setScore(e);
+  };
+
+  const updateHighest = (e) => {
+    setHighest(e);
+  };
 
   const updateMenu = (e) => {
     setMenu(e);
@@ -43,6 +53,10 @@ export const StateContext = ({ children }) => {
         updateSetContinent,
         screen,
         updateScreen,
+        score,
+        updateScore,
+        highest,
+        updateHighest,
       }}
     >
       {children}
