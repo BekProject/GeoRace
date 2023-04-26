@@ -16,11 +16,27 @@ html{
 }
 
 .App{
-    display: block;
-    width: 100vw;
+    display: flex;
+    flex-direction: row;
     height: 100vh;
 }
 
+.sidebar{
+    width: 100%;
+    max-width: 300px;
+    
+}
+
+
+#globe{
+    background-color: blue;
+}
+
+.scene-container{
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
 
 
 .HoverInformation{
@@ -119,4 +135,8 @@ html{
     position: absolute;
     right: 0;
 
+}
+
+.max-w-custom{
+    max-width: 250px;
 }

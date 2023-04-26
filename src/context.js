@@ -7,9 +7,17 @@ export const StateContext = ({ children }) => {
   const [stats, setStats] = useState(false);
   const globeRef = useRef();
   const [continentFilter, setContinentFilter] = useState("all");
-  const [screen, setScreen] = useState(1);
+  const [screen, setScreen] = useState(0);
   const [score, setScore] = useState(0);
   const [highest, setHighest] = useState(0);
+  const [state, setState] = useState({
+    position: [5, 4],
+    cameraDistanceRadius: 3,
+  });
+
+  const updateState = (newState) => {
+    setState(newState);
+  };
 
   const updateScore = (e) => {
     setScore(e);
@@ -57,6 +65,8 @@ export const StateContext = ({ children }) => {
         updateScore,
         highest,
         updateHighest,
+        updateState,
+        state,
       }}
     >
       {children}
