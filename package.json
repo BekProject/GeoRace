@@ -3,22 +3,33 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@deck.gl/core": "^8.9.11",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@headlessui/react": "^1.7.14",
     "@mui/material": "^5.11.6",
+    "@react-three/fiber": "^8.12.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/three": "^0.150.1",
     "axios": "^1.2.2",
+    "cors": "^2.8.5",
     "d3": "^7.8.1",
     "firebase": "^9.16.0",
+    "heroicons": "^2.0.17",
+    "mapbox-gl": "^2.14.1",
     "react": "^18.2.0",
     "react-d3": "^0.4.0",
     "react-dom": "^18.2.0",
     "react-globe.gl": "^2.22.10",
     "react-hot-toast": "^2.4.0",
+    "react-map-gl": "^7.0.23",
+    "react-mapbox-gl": "^5.1.1",
     "react-scripts": "5.0.1",
     "react-toastify": "^9.1.1",
+    "tailwind-styled-components": "^2.2.0",
+    "three": "^0.151.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -44,5 +55,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.1"
   }
 }

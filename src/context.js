@@ -7,7 +7,25 @@ export const StateContext = ({ children }) => {
   const [stats, setStats] = useState(false);
   const globeRef = useRef();
   const [continentFilter, setContinentFilter] = useState("all");
-  const [screen, setScreen] = useState(1);
+  const [screen, setScreen] = useState(0);
+  const [score, setScore] = useState(0);
+  const [highest, setHighest] = useState(0);
+  const [state, setState] = useState({
+    position: [5, 4],
+    cameraDistanceRadius: 3,
+  });
+
+  const updateState = (newState) => {
+    setState(newState);
+  };
+
+  const updateScore = (e) => {
+    setScore(e);
+  };
+
+  const updateHighest = (e) => {
+    setHighest(e);
+  };
 
   const updateMenu = (e) => {
     setMenu(e);
@@ -18,7 +36,7 @@ export const StateContext = ({ children }) => {
   };
 
   const updateEarthSpin = (e) => {
-    globeRef.current.controls().autoRotate = e;
+    // globeRef.current.controls().autoRotate = e;
   };
 
   const updateSetContinent = (e) => {
@@ -43,6 +61,12 @@ export const StateContext = ({ children }) => {
         updateSetContinent,
         screen,
         updateScreen,
+        score,
+        updateScore,
+        highest,
+        updateHighest,
+        updateState,
+        state,
       }}
     >
       {children}

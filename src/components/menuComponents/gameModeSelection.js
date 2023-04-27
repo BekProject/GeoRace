@@ -1,55 +1,10 @@
-import {
-  Button,
-  ButtonGroup,
-  FormControl,
-  NativeSelect,
-  Typography,
-} from "@mui/material";
 import { useStateContext } from "../../context";
-import { styled } from "@mui/material/styles";
-import { useState } from "react";
-import InputBase from "@mui/material/InputBase";
-
-const BootstrapInput = styled(InputBase)(({ theme }) => ({
-  "label + &": {
-    marginTop: theme.spacing(3),
-  },
-  "& .MuiInputBase-input": {
-    borderRadius: 4,
-    position: "relative",
-    backgroundColor: "transparent",
-    border: "1px solid #1976d280",
-    fontSize: "0.975rem",
-    padding: "10px 26px 10px 12px",
-    width: "100%",
-    color: "#1976d2",
-    transition: theme.transitions.create(["border-color", "box-shadow"]),
-    marginTop: theme.spacing(3),
-    FontFamily: "Roboto",
-    // Use the system font instead of the default Roboto font.
-
-    "&:focus": {
-      borderRadius: 4,
-      borderColor: "#80bdff",
-      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
-    },
-  },
-}));
 
 export default function GameSelection() {
-  const {
-    updateEarthSpin,
-    updateStats,
-    updateMenu,
-    continentFilter,
-    updateSetContinent,
-  } = useStateContext();
-  const [userSettingsSelection, setUserSettingSelection] = useState();
-  const [tempValue, setTempValue] = useState(0);
-
+  const { updateEarthSpin, updateStats, updateMenu } = useStateContext();
   return (
     <div className="menuContainerButtonContainers">
-      <div className="menuContainerButtonContainersMax">
+      {/* <div className="menuContainerButtonContainersMax">
         <Typography variant="body1" component="h1" style={{ color: "#1976d2" }}>
           Select :
         </Typography>
@@ -137,6 +92,82 @@ export default function GameSelection() {
         >
           Start 🏁
         </Button>
+      </div> */}
+      <div className="flex flex-col md:flex-row ">
+        <div
+          onClick={() => {
+            updateEarthSpin(false);
+            updateStats(true);
+            updateMenu(false);
+          }}
+          className="w-full md:w-1/2 p-5 cursor-pointer"
+        >
+          <div className="group relative block bg-black rounded-xl">
+            <img
+              alt="Developer"
+              src="https://c4.wallpaperflare.com/wallpaper/719/652/911/earth-horizon-wallpaper-preview.jpg"
+              className="absolute inset-0 rounded-xl h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
+            />
+
+            <div className="relative p-4 sm:p-6 lg:p-8">
+              <p className="text-sm font-medium uppercase tracking-widest text-yellow-500">
+                Casual
+              </p>
+
+              <p className="text-xl font-bold text-white sm:text-2xl">
+                Exploration Mode
+              </p>
+
+              <div className="mt-32 sm:mt-48 lg:mt-64">
+                <div className="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                  <p className="text-sm text-white">
+                    Discover the world in a fun and stress-free way with Explore
+                    Mode! Take your time exploring different countries and their
+                    cultures with unlimited time and extra hints. Perfect for
+                    sharpening your geography skills!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          onClick={() => {
+            updateEarthSpin(false);
+            updateStats(true);
+            updateMenu(false);
+          }}
+          className="w-full md:w-1/2 p-5 cursor-pointer"
+        >
+          <div className="group relative block bg-black rounded-xl">
+            <img
+              alt="Developer"
+              src="https://cdn.wallpapersafari.com/88/66/Uowyg0.jpg"
+              className="absolute inset-0 rounded-xl h-full w-full object-cover opacity-75 transition-opacity group-hover:opacity-50"
+            />
+
+            <div className="relative p-4 sm:p-6 lg:p-8">
+              <p className="text-sm font-medium uppercase tracking-widest text-pink-500">
+                Hardcore
+              </p>
+
+              <p className="text-xl font-bold text-white sm:text-2xl">
+                Race Mode
+              </p>
+
+              <div className="mt-32 sm:mt-48 lg:mt-64">
+                <div className="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
+                  <p className="text-sm text-white">
+                    With fast-paced action and challenging obstacles, Race Mode
+                    is perfect for those who love a good challenge. So, gear up
+                    and race to the finish line, and see if you have what it
+                    takes to become a global explorer!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
