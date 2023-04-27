@@ -1,7 +1,11 @@
 import React from "react";
 import "./menu.css";
+import { useStateContext } from "../../context";
+import { auth, signInWithGoogle } from "../../firebase";
 
 export default function MainMenu() {
+  const { updateMenu, updateStats } = useStateContext();
+
   return (
     <div className="MainMenuContainer">
       <div className="MainMenuAccountMethodContainer">
@@ -77,7 +81,10 @@ export default function MainMenu() {
                     <div className="w-full px-2 mb-3 ">
                       <a
                         className=" inline-flex w-full py-3 px-4 items-center justify-center rounded-lg border border-zinc-900 hover:bg-white transition duration-100 text-white hover:text-black"
-                        onClick={()}
+                        onClick={() => {
+                          signInWithGoogle();
+                          console.log("clicked");
+                        }}
                       >
                         <img
                           src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2008px-Google_%22G%22_Logo.svg.png"

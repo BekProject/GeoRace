@@ -1,10 +1,11 @@
 import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useStateContext } from "../context";
+import { auth } from "../firebase";
 
 export default function SidebarView({}) {
   const { updateMenu, globeRef, score, highest } = useStateContext();
-
+  console.log(auth.currentUser);
   const [open, setOpen] = useState(true);
 
   return (
@@ -229,7 +230,6 @@ export default function SidebarView({}) {
                     d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"
                   />
                 </svg>
-
                 <span className="text-sm font-medium"> Details </span>
               </a>
 
@@ -283,22 +283,20 @@ export default function SidebarView({}) {
         </nav>
       </div>
 
-      <div className="sticky inset-x-0 bottom-0 border-t border-gray-100">
-        <a
-          href="#"
-          className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50"
-        >
+      <div className="absolute inset-x-0 bottom-0 border-t">
+        <a href="#" className="flex items-center gap-2  p-4 hover:bg-zinc-900">
           <img
             alt="Man"
-            src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+            src={auth.currentUser.photoURL}
             className="h-10 w-10 rounded-full object-cover"
           />
 
           <div>
-            <p className="text-xs">
-              <strong className="block font-medium">Eric Frusciante</strong>
-
-              <span> eric@frusciante.com </span>
+            <p className="text-xs text-white  ">
+              <strong className="block font-medium">
+                {auth.currentUser.displayName}
+              </strong>
+              <span>{auth.currentUser.email}</span>
             </p>
           </div>
         </a>

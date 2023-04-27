@@ -1,4 +1,3 @@
-import Globe from "react-globe.gl";
 import { useState, useEffect, useRef } from "react";
 import countriesz from "../mapData/worldBorders.geojson";
 import toast from "react-hot-toast";
@@ -6,6 +5,7 @@ import { useStateContext } from "../context";
 import axios from "axios";
 import ScoreOverlay from "./ScoreOverlay";
 import SidebarView from "./SidebarView";
+import Map from "./Globe";
 
 const correctCountry = () => {
   toast.success("Correct!", { duration: 1000 });
@@ -61,8 +61,8 @@ function GameTest() {
         getLandmarks(countryCode);
         console.log("random country is: ", randomCountryName);
 
-        globeRef.current.controls().autoRotate = true;
-        globeRef.current.controls().autoRotateSpeed = 0.3;
+        // globeRef.current.controls().autoRotate = true;
+        // globeRef.current.controls().autoRotateSpeed = 0.3;
       });
   }, [globeRef]);
 
@@ -196,8 +196,10 @@ function GameTest() {
 
   return (
     <div className="flex h-screen">
-      {stats && <SidebarView />}
-      <div class=" flex-1 flex items-center justify-center">
+      {/* {stats && <SidebarView />} */}
+      <Map />
+
+      {/* <div class=" flex-1 flex items-center justify-center">
         <Globe
           id="globe"
           animateIn={true}
@@ -220,7 +222,7 @@ function GameTest() {
           backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
           markersData={markersData}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

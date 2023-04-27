@@ -36,7 +36,7 @@ export const StateContext = ({ children }) => {
   };
 
   const updateEarthSpin = (e) => {
-    globeRef.current.controls().autoRotate = e;
+    // globeRef.current.controls().autoRotate = e;
   };
 
   const updateSetContinent = (e) => {
