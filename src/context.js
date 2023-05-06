@@ -27,12 +27,12 @@ export const StateContext = ({ children }) => {
     setHighest(e);
   };
 
-  const updateMenu = (e) => {
-    setMenu(e);
+  const updateMenu = () => {
+    setMenu(!menu);
   };
 
-  const updateStats = (e) => {
-    setStats(e);
+  const updateStats = () => {
+    setStats(!stats);
   };
 
   const updateEarthSpin = (e) => {

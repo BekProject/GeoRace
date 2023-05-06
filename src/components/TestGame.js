@@ -3,9 +3,8 @@ import countriesz from "../mapData/worldBorders.geojson";
 import toast from "react-hot-toast";
 import { useStateContext } from "../context";
 import axios from "axios";
-import ScoreOverlay from "./ScoreOverlay";
+import Globe from "react-globe.gl";
 import SidebarView from "./SidebarView";
-import Map from "./Globe";
 
 const correctCountry = () => {
   toast.success("Correct!", { duration: 1000 });
@@ -57,12 +56,9 @@ function GameTest() {
         var randomCountry =
           features[Math.floor(Math.random() * features.length)];
         setRandomCountryName(randomCountry.properties.ADMIN);
-        var countryCode = randomCountry.properties.ISO_A3;
-        getLandmarks(countryCode);
-        console.log("random country is: ", randomCountryName);
-
         // globeRef.current.controls().autoRotate = true;
         // globeRef.current.controls().autoRotateSpeed = 0.3;
+        // this is causing error where the main page is just black lol.
       });
   }, [globeRef]);
 
@@ -101,27 +97,6 @@ function GameTest() {
       return "yellow";
     } else return "#0d1116";
   }
-
-  const getLandmarks = async (code) => {
-    try {
-      const response = await axios.get(
-        `https://restcountries.com/v2/alpha/${code}`
-      );
-      const data = response.data;
-      const top5Landmarks = data.borders.slice(0, 5);
-      const landmarksData = await Promise.all(
-        top5Landmarks.map(async (code) => {
-          const landmarkResponse = await axios.get(
-            `https://restcountries.com/v2/alpha/${code}`
-          );
-          return landmarkResponse.data;
-        })
-      );
-      setLandmarks(landmarksData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const markersData = landmarks.map((landmark) => ({
     id: landmark.alpha3Code,
@@ -196,10 +171,11 @@ function GameTest() {
 
   return (
     <div className="flex h-screen">
-      {/* {stats && <SidebarView />} */}
-      <Map />
+      {stats && (
+        <SidebarView skip={getRandomCountry} country={randomCountryName} />
+      )}
 
-      {/* <div class=" flex-1 flex items-center justify-center">
+      <div class=" flex-1 flex items-center justify-center">
         <Globe
           id="globe"
           animateIn={true}
@@ -222,7 +198,7 @@ function GameTest() {
           backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
           markersData={markersData}
         />
-      </div> */}
+      </div>
     </div>
   );
 }
