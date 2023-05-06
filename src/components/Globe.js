@@ -1,26 +1,85 @@
-// ES6
-import ReactMapboxGl, { Layer, Feature } from "react-mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
+import React from "react";
+import ReactMapGL, { FlyToInterpolator } from "react-map-gl";
 
-// ES5
+const Map = () => {
+  const mapStyle =
+    "mapbox://styles/mapbox/dark-v10?style=mapbox://styles/mapbox/dark-v10&layers=country-label";
 
-const Map = ReactMapboxGl({
-  accessToken:
-    "pk.eyJ1IjoiYmVrZGV2IiwiYSI6ImNsZ3lmNnR5ZTAwMGczdW9nOXY3MGtzaHIifQ.E37PZbdGmRb8xAYP73h4xg",
-});
+  const [viewport, setViewport] = React.useState({
+    width: "100%",
+    height: "100%",
+    latitude: 0,
+    longitude: 0,
+    zoom: 2,
+  });
 
-// in render()
+  const [hoveredFeature, setHoveredFeature] = React.useState(null);
 
-<Map
-  style="mapbox://styles/mapbox/streets-v9"
-  containerStyle={{
-    height: "100vh",
-    width: "100vw",
-  }}
->
-  <Layer type="symbol" id="marker" layout={{ "icon-image": "marker-15" }}>
-    <Feature coordinates={[-0.481747846041145, 51.3233379650232]} />
-  </Layer>
-</Map>;
+  const handleHover = (event) => {
+    const { features, srcEvent } = event;
+    const hoveredFeature =
+      features && features.find((f) => f.layer.id === "countries");
+
+    setHoveredFeature(hoveredFeature);
+
+    if (hoveredFeature) {
+      const map = event.target;
+      map.getCanvas().style.cursor = "pointer";
+      map.setFeatureState(
+        {
+          source: "countries",
+          id: hoveredFeature.id,
+        },
+        { hover: true }
+      );
+    }
+  };
+
+  const handleMouseLeave = (event) => {
+    const map = event.target;
+    map.getCanvas().style.cursor = "";
+    if (hoveredFeature) {
+      map.setFeatureState(
+        {
+          source: "countries",
+          id: hoveredFeature.id,
+        },
+        { hover: false }
+      );
+    }
+    setHoveredFeature(null);
+  };
+
+  return (
+    <ReactMapGL
+      {...viewport}
+      mapStyle={mapStyle}
+      onViewportChange={setViewport}
+      onHover={handleHover}
+      onMouseLeave={handleMouseLeave}
+    >
+      <source
+        id="countries"
+        type="vector"
+        url="mapbox://mapbox.country-boundaries-v1"
+      />
+      <layer
+        id="countries"
+        type="line"
+        source="countries"
+        source-layer="country_boundaries"
+        paint={{
+          "line-color": [
+            "case",
+            ["boolean", ["feature-state", "hover"], false],
+            "red",
+            "white",
+          ],
+          "line-width": 1,
+        }}
+      />
+    </ReactMapGL>
+  );
+};
 
 export default Map;
