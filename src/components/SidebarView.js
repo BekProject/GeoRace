@@ -1,12 +1,7 @@
-import { Fragment, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
 import { useStateContext } from "../context";
-import { auth } from "../firebase";
 
 export default function SidebarView({ country, skip }) {
-  const { updateMenu, globeRef, score, highest, updateStats } =
-    useStateContext();
-  const [open, setOpen] = useState(true);
+  const { updateMenu, score, highest, updateStats } = useStateContext();
 
   return (
     <div
@@ -20,16 +15,16 @@ export default function SidebarView({ country, skip }) {
 
         <nav aria-label="Main Nav" className="mt-2 flex flex-col space-y-1">
           <div className="flex">
-            <a className="w-1/2 flex items-center gap-2 rounded-lg  px-4 py-2 text-white hover:bg-black">
+            <h2 className="w-1/2 flex items-center gap-2 rounded-lg  px-4 py-2 text-white hover:bg-black">
               <span className="text-lg">✅ : {score}/178 </span>
-            </a>
+            </h2>
 
-            <a className="w-1/2 flex items-center gap-2 rounded-lg  px-4 py-2 text-white hover:bg-black">
+            <h2 className="w-1/2 flex items-center gap-2 rounded-lg  px-4 py-2 text-white hover:bg-black">
               <span className="text-lg font-medium"> 🔥 : {highest} </span>
-            </a>
+            </h2>
           </div>
           <div className="flex">
-            <a
+            <h2
               href="#"
               className="w-1/2 flex items-center gap-2 rounded-lg  px-4 py-2 text-white hover:bg-black"
             >
@@ -42,14 +37,14 @@ export default function SidebarView({ country, skip }) {
               >
                 👈 Menu
               </span>
-            </a>
+            </h2>
 
-            <a
+            <h2
               onClick={() => skip()}
               className="w-1/2 flex items-center gap-2 rounded-lg  px-4 py-2 text-white hover:bg-black"
             >
               <span className="text-lg"> ⏩ Skip </span>
-            </a>
+            </h2>
           </div>
         </nav>
       </div>

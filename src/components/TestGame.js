@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import countriesz from "../mapData/worldBorders.geojson";
 import toast from "react-hot-toast";
 import { useStateContext } from "../context";
-import axios from "axios";
 import Globe from "react-globe.gl";
 import SidebarView from "./SidebarView";
 
@@ -30,10 +29,7 @@ function GameTest() {
     continentFilter,
     score,
     updateScore,
-    highest,
     updateHighest,
-    updateState,
-    state,
   } = useStateContext();
 
   const [countries, setCountries] = useState({ features: [] });
@@ -43,8 +39,6 @@ function GameTest() {
   const [wrongCountries, setWrongCountries] = useState([]);
   const [correctCountries, setCorrectCountries] = useState([]);
   const [possibleCountries, setPossibleCountries] = useState([]);
-  const [pictures, setPictures] = useState([]);
-  const [landmarks, setLandmarks] = useState([]);
 
   useEffect(() => {
     fetch(countriesz)
@@ -62,14 +56,16 @@ function GameTest() {
       });
   }, [globeRef]);
 
-
-
   useEffect(() => {
     // filter  selectionPool every time the filter is changed
-    console.log('country filtering process began');
-    if (continentFilter !== 'all') {
-      console.log('continenet filter is: ', continentFilter)
-      setSelectionPool(possibleCountries.filter((item) => item.properties.CONTINENT === continentFilter));
+    console.log("country filtering process began");
+    if (continentFilter !== "all") {
+      console.log("continenet filter is: ", continentFilter);
+      setSelectionPool(
+        possibleCountries.filter(
+          (item) => item.properties.CONTINENT === continentFilter
+        )
+      );
       // getRandomCountry();
     } else {
       setSelectionPool(possibleCountries);
@@ -82,14 +78,13 @@ function GameTest() {
     // whenever the menu is put away
     getRandomCountry();
 
-    if (selectionPool.length !== 0){
-      selectionPool.forEach((e) => 
-      {
-        console.log(e.properties.ADMIN, ' ', e.properties.CONTINENT);
-      })
+    if (selectionPool.length !== 0) {
+      selectionPool.forEach((e) => {
+        console.log(e.properties.ADMIN, " ", e.properties.CONTINENT);
+      });
     }
-    
-  }, [updateMenu])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateMenu]);
 
   function inAlreadyClicked(e) {
     if (wrongCountries.includes(e)) {
@@ -102,14 +97,6 @@ function GameTest() {
       return "yellow";
     } else return "#0d1116";
   }
-
-  const markersData = landmarks.map((landmark) => ({
-    id: landmark.alpha3Code,
-    name: landmark.name,
-    coordinates: [landmark.latlng[1], landmark.latlng[0]],
-    value: 1,
-    color: "red",
-  }));
 
   // function randomlySelectedCountry() {
   //   if (selectionPool.length === 1) {
@@ -140,7 +127,10 @@ function GameTest() {
       setSelectionPool(selectionPool.filter((item) => item !== randomCountry));
     }
 
-    console.log('randomly selected: ', randomCountry.properties.ADMIN, ' ',
+    console.log(
+      "randomly selected: ",
+      randomCountry.properties.ADMIN,
+      " ",
       randomCountry.properties.CONTINENT
     );
   }
@@ -200,7 +190,6 @@ function GameTest() {
           }}
           globeImageUrl="//unpkg.com/three-globe/example/img/earth-blue-marble.jpg"
           backgroundImageUrl="//unpkg.com/three-globe/example/img/night-sky.png"
-          markersData={markersData}
         />
       </div>
     </div>

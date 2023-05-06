@@ -6,7 +6,7 @@ import MainMenu from "./menuComponents/mainMenu";
 import { auth } from "../firebase";
 
 function Menu() {
-  const { menu, screen } = useStateContext();
+  const { menu } = useStateContext();
 
   return menu ? (
     <div className="menuContainer">

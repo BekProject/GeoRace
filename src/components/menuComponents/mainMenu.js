@@ -1,11 +1,8 @@
 import React from "react";
 import "./menu.css";
-import { useStateContext } from "../../context";
-import { auth, signInWithGoogle } from "../../firebase";
+import { signInWithGoogle } from "../../firebase";
 
 export default function MainMenu() {
-  const { updateMenu, updateStats } = useStateContext();
-
   return (
     <div className="MainMenuContainer">
       <div className="MainMenuAccountMethodContainer">
@@ -24,10 +21,7 @@ export default function MainMenu() {
                           <p className="mb-4 text-sm text-coolGray-500 font-medium">
                             A fun way to learn geography!
                           </p>
-                          <a
-                            className="inline-flex items-center text-green-500 hover:text-green-600 font-medium"
-                            href="#"
-                          >
+                          <h3 className="inline-flex items-center text-green-500 hover:text-green-600 font-medium">
                             <span className="mr-2">Learn More</span>
                             <svg
                               width={20}
@@ -41,7 +35,7 @@ export default function MainMenu() {
                                 fill="currentColor"
                               />
                             </svg>
-                          </a>
+                          </h3>
                         </div>
                       </div>
                       <div className="w-full pt-6 pb-5">
@@ -79,7 +73,7 @@ export default function MainMenu() {
 
                   <div className="flex flex-wrap mb-6 items-center -mx-2 mt-2">
                     <div className="w-full px-2 mb-3 ">
-                      <a
+                      <h3
                         className=" inline-flex w-full py-3 px-4 items-center justify-center rounded-lg border border-zinc-900 hover:bg-white transition duration-100 text-white hover:text-black"
                         onClick={() => {
                           signInWithGoogle();
@@ -94,7 +88,7 @@ export default function MainMenu() {
                         <span className="ml-4 text-sm font-bold">
                           Contine / Start with Google
                         </span>
-                      </a>
+                      </h3>
                     </div>
                   </div>
                 </div>

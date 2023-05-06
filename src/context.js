@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useRef, continentFilter } from "react";
+import React, { createContext, useContext, useState, useRef } from "react";
 
 const Context = createContext();
 
